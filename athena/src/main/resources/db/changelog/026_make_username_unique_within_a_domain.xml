@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1695990940-1" author="ahira">
+        <dropUniqueConstraint tableName="users"
+                              constraintName="uc_users_username"/>
+    </changeSet>
+
+    <changeSet id="1695990940-2" author="ahira">
+        <addUniqueConstraint tableName="users"
+                             columnNames="username, domain_id"
+                             constraintName="uc_users_username_domain_id"/>
+    </changeSet>
+
+</databaseChangeLog>

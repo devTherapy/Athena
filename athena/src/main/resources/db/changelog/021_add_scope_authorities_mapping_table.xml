@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1692869904-1" author="ahira">
+        <createTable tableName="scope_authorities">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scope_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1692869904-2" author="ahira">
+        <addUniqueConstraint tableName="scope_authorities"
+                             columnNames="scope_id, authority_id"
+                             constraintName="uc_scope_authorities_scope_id_authority_id"/>
+
+        <addForeignKeyConstraint baseTableName="scope_authorities"
+                                 baseColumnNames="scope_id"
+                                 constraintName="fk_scope_authorities_on_scope"
+                                 referencedTableName="scopes"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="scope_authorities"
+                                 baseColumnNames="authority_id"
+                                 constraintName="fk_scope_authorities_on_authority"
+                                 referencedTableName="authorities"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

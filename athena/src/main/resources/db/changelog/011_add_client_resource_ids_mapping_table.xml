@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1690760674-1" author="ahira">
+        <createTable tableName="client_resource_ids">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resource_server_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1690760674-2" author="ahira">
+        <addUniqueConstraint tableName="client_resource_ids"
+                             columnNames="client_id, resource_server_id"
+                             constraintName="uc_client_resource_ids_client_id_resource_server_id"/>
+
+        <addForeignKeyConstraint baseTableName="client_resource_ids"
+                                 baseColumnNames="client_id"
+                                 constraintName="fk_client_resource_ids_on_client"
+                                 referencedTableName="clients"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="client_resource_ids"
+                                 baseColumnNames="resource_server_id"
+                                 constraintName="fk_client_resource_ids_on_resource_server"
+                                 referencedTableName="resource_servers"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

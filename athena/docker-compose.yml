@@ -1,0 +1,17 @@
+services:
+  athena:
+    container_name: athena
+    image: ${DOCKER_REGISTRY-}athena:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      secrets:
+      - maven_repo_password
+    env_file:
+      - .dockerenv
+    ports:
+      - "38520:80"
+
+secrets:
+  maven_repo_password:
+    file: ./maven_repo_password

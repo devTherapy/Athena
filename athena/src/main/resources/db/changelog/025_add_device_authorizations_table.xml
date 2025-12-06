@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1693484096-1" author="ahira">
+        <createTable tableName="device_authorizations">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="device_code_id" type="BIGINT">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uc_device_authorizations_device_code_id"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authorized" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1693484096-2" author="ahira">
+        <addForeignKeyConstraint baseTableName="device_authorizations"
+                                 baseColumnNames="device_code_id"
+                                 constraintName="fk_device_authorizations_on_device_code"
+                                 referencedTableName="device_codes"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="device_authorizations"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_device_authorizations_on_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

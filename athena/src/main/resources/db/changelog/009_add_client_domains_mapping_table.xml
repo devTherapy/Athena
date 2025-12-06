@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1690752986-1" author="ahira">
+        <createTable tableName="client_domains">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="domain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1690752986-2" author="ahira">
+        <addUniqueConstraint tableName="client_domains"
+                             columnNames="client_id, domain_id"
+                             constraintName="uc_client_domains_client_id_domain_id"/>
+
+        <addForeignKeyConstraint baseTableName="client_domains"
+                                 baseColumnNames="client_id"
+                                 constraintName="fk_client_domains_on_client"
+                                 referencedTableName="clients"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="client_domains"
+                                 baseColumnNames="domain_id"
+                                 constraintName="fk_client_domains_on_domain"
+                                 referencedTableName="domains"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${env.DATABASE_URL}
+    username: ${env.DATABASE_USER}
+    password: ${env.DATABASE_PASSWORD}
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+
+server:
+  port: ${env.PORT}
+  error:
+    whitelabel:
+      enabled: false
+
+
+athena:
+  config:
+    public-key: ${env.PUBLIC_KEY}
+    private-key: ${env.PRIVATE_KEY}
+    authorization-uri: ${env.AUTHORIZATION_URI}
+    auth-code:
+      length: ${env.AUTH_CODE_LENGTH}
+    device:
+      login:
+        poll-interval-seconds: ${env.DEVICE_LOGIN_POLL_INTERVAL_SECONDS}
+        verification-uri: ${env.DEVICE_LOGIN_VERIFICATION_URI}
+      device-code:
+        length: ${env.DEVICE_CODE_LENGTH}
+      user-code:
+        length: ${env.USER_CODE_LENGTH}
+        alphabet: ${env.USER_CODE_ALPHABET}
+    client:
+      secret: ${env.CLIENT_SECRET}
+    superuser:
+      password: ${env.SUPERUSER_PASSWORD}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1691243469-1" author="ahira">
+        <addColumn tableName="auth_codes">
+            <column name="requested_domain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="request_redirect_uri" type="VARCHAR(255)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="1691243469-2" author="ahira">
+        <addForeignKeyConstraint baseTableName="auth_codes"
+                                 baseColumnNames="requested_domain_id"
+                                 constraintName="fk_auth_codes_on_domain"
+                                 referencedTableName="domains"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

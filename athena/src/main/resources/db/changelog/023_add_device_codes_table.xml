@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1693483575-1" author="ahira">
+        <createTable tableName="device_codes">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_on" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_on" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)" defaultValue="system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(255)" defaultValue="system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requested_domain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="device_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_code" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uc_device_codes_user_code"/>
+            </column>
+            <column name="verification_uri" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requested_scope" type="TEXT"/>
+            <column name="expiry" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="interval_in_seconds" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_used" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1693483575-2" author="ahira">
+        <addUniqueConstraint tableName="device_codes"
+                             columnNames="client_id, device_code"
+                             constraintName="uc_device_codes_client_id_device_code"/>
+
+        <addForeignKeyConstraint baseTableName="device_codes"
+                                 baseColumnNames="client_id"
+                                 constraintName="fk_device_codes_on_client"
+                                 referencedTableName="clients"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="device_codes"
+                                 baseColumnNames="requested_domain_id"
+                                 constraintName="fk_device_codes_on_domain"
+                                 referencedTableName="domains"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

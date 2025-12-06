@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1696349132-1" author="ahira">
+        <dropUniqueConstraint tableName="authorities"
+                              constraintName="uc_authorities_name_domain_id"/>
+    </changeSet>
+
+    <changeSet id="1696349132-2" author="ahira">
+        <addUniqueConstraint tableName="authorities"
+                             columnNames="name"
+                             constraintName="uc_authorities_name"/>
+    </changeSet>
+
+</databaseChangeLog>

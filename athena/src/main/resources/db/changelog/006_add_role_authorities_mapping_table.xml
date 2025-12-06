@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="1689983430-1" author="ahira">
+        <createTable tableName="role_authorities">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1689983430-2" author="ahira">
+        <addUniqueConstraint tableName="role_authorities"
+                             columnNames="role_id, authority_id"
+                             constraintName="uc_role_authorities_role_id_authority_id"/>
+
+        <addForeignKeyConstraint baseTableName="role_authorities"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_role_authorities_on_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="role_authorities"
+                                 baseColumnNames="authority_id"
+                                 constraintName="fk_role_authorities_on_authority"
+                                 referencedTableName="authorities"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

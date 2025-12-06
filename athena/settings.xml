@@ -1,0 +1,11 @@
+<settings>
+
+    <servers>
+        <server>
+            <id>github</id>
+            <username>retaila</username>
+            <password>${env.MAVEN_REPO_PASSWORD}</password>
+        </server>
+    </servers>
+    
+</settings>
